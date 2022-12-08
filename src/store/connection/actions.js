@@ -205,8 +205,11 @@ async getNftFromCreator(store, loadMetadata = false) {
   const { state, getters }  = store
   const { metaplex, wallet, identity } = useWorkspace();
   if(!mintAddress || !(mintAddress in getters.candyMachinesMintMapped)){
-    const candyMachines = await metaplex.value.candyMachines().findAllBy({ type: "wallet", publicKey: identity });
-    candyMachines.forEach((candyMachine) => {
+    const candyMachines = await metaplex.value.candyMachinesV2().findAllBy({ type: "wallet", publicKey: identity });
+    candyMachines.filter((candyMachine) => {
+      return candyMachine.itemsRemaining.toString() != '0'
+    })
+    .forEach((candyMachine) => {
       //Use the mint address
       //Alias the nft
       const key = candyMachine.address.toBase58()

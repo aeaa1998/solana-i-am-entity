@@ -6,8 +6,13 @@
     </div>
 
     <template v-if="previewsImage && previewVisible">
-      <img v-if="imagePreview" :src="imagePreview" class="image_preview" />
-      <div v-else class="image_preview p-2 text-center flex place-items-center text-blue-900/80">Sube una imagen para poder verla</div>
+      <img v-if="imagePreview" :src="imagePreview" class="aspect-square h-36 w-36 md:h-48 md:w-48 bg-gray-100 border border-gray-400 rounded-md my-2 justify-center self-center" />
+      <div
+        v-else
+        class="aspect-square h-36 w-36 md:h-48 md:w-48 bg-gray-100 border border-gray-400 rounded-md my-2 justify-center self-center p-2 text-center flex place-items-center text-blue-900/80"
+      >
+        Sube una imagen para poder verla
+      </div>
     </template>
 
     <input class="hidden" type="file" ref="fileInput" :id="name" :name="name" @input="handle" @blur="handleBlur" @change="handleChangeWrapper" :accept="accept" />
@@ -97,9 +102,9 @@ onMounted(() => {
         dark:text-gray-600 dark:placeholder-gray-400;
 }
 
-.image_preview {
+/* .image_preview {
   @apply aspect-square h-36 w-36 md:h-48 md:w-48 bg-gray-100 border border-gray-400 rounded-md my-2 justify-center self-center;
-}
+} */
 
 .image_preview_icon {
   @apply h-4 w-4 rounded-full bg-primary-700/30 p-1.5 text-primary-900/80;

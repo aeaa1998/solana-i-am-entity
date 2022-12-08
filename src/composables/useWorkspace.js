@@ -36,7 +36,7 @@ export const initWorkspace = () => {
         program,
         metaplex: metaplex,
         normalWallet,
-        identity: new PublicKey("2kxrCSfcg9NFKBQdnsY6AywKpHouMLXCRofY1CEGaf1R"),
+        identity: new PublicKey("iB2MwzS8H5jm8gPvhzyrdDKPi8naL3U4ZQsQspnuXLy"),
         isValidWallet
     }
 }

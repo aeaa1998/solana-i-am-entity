@@ -1,19 +1,20 @@
 <template>
   <div
     @click="(e) => $emit('click', e)"
-    class="transition ease-in-out hover:scale-110 duration-300 w-60 h-60 bg-primary-50 rounded flex flex-col justify-end border-2 border-primary-200 bg-cover"
+    class="transition ease-in-out hover:scale-110 duration-300 w-60 h-60 bg-white rounded-lg flex flex-col justify-end bg-cover shadow-lg bg-center"
     :class="{
       'cursor-pointer': nft.model != 'metadata',
     }"
     :style="styleBg"
   >
-    <div class="text-black text-white px-1 py-1 bg-primary-200">
-      <div class="text-sm font-bold h-8 flex flex-col">
-        {{ nft.name }}
-      </div>
-      {{ nft.mint ? nft.mint.address.toBase58() : nft.mintAddress.toBase58() }}
-      <div v-if="description" class="text-xs">
-        {{ description }}
+    <div class="px-1 py-1">
+      <div class="text-white text-white px-2 py-1 bg-gray-900/80 rounded-lg">
+        <div class="text-sm font-bold h-8 flex flex-col">
+          {{ nft.name }}
+        </div>
+        <div v-if="description" class="text-xs">
+          {{ description }}
+        </div>
       </div>
     </div>
   </div>
@@ -35,6 +36,7 @@ export default {
       if (nft.value.json) {
         return {
           "background-image": `url(${nft.value.json.image})`,
+          "background-repeat": "no-repeat",
         };
       }
       return {};

@@ -9,8 +9,8 @@
         isOpen = !isOpen;
         isActive = !isActive;
       "
-      class="flex items-center p-2 transition-colors rounded-md hover:bg-primary-300 hover:text-white"
-      :class="{ 'bg-primary-300 text-white': isActive || isOpen, 'text-gray-800': !isActive && !isOpen }"
+      class="flex items-center py-2 px-3 transition-colors rounded-md hover:bg-primary-300 hover:text-white font-semibold"
+      :class="{ 'bg-primary-300 text-white': isActive || isOpen, 'text-white': !isActive && !isOpen }"
       role="button"
       aria-haspopup="true"
       :aria-expanded="isOpen || isActive ? 'true' : 'false'"

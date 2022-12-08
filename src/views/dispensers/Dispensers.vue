@@ -26,8 +26,11 @@
       ></lottie-player>
       <div class="text-xl font-semibold text-center mt-2">Sin disponsadores disponibles</div>
     </template>
-    <div v-else class="w-full flex flex-row flex-wrap gap-x-4 gap-y-2 mt-4">
-      <CandyMachineCard v-for="dispenser in dispensers" :key="dispenser.address.toBase58()" :candyMachine="dispenser" />
+    <div v-else v-for="key in dispenserKeys" :key="key" class="py-3">
+      <h1 class="text-2xl font-bold text-secondary-600 mb-3">Dispensadores de {{ key }}</h1>
+      <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <CandyMachineCard v-for="(dispenser, index) in dispensersMapped[key]" :number="index" :key="dispenser.address.toBase58()" :candyMachine="dispenser" />
+      </ul>
     </div>
   </div>
 </template>
@@ -50,6 +53,22 @@ export default {
     const store = useStore();
     const isLoading = ref(false);
     const dispensers = computed(() => store.getters.candyMachines);
+    const dispensersMapped = computed(() => {
+      if (dispensers.value.length) {
+        return dispensers.value.reduce((acc, dispenser) => {
+          if (!acc[dispenser.symbol]) {
+            acc[dispenser.symbol] = [];
+          }
+          acc[dispenser.symbol].push(dispenser);
+          return acc;
+        }, {});
+      }
+      return {};
+    });
+
+    const dispenserKeys = computed(() => {
+      return Object.keys(dispensersMapped.value);
+    });
     const nfts = computed(() => store.getters.nfts);
     async function fetchMachines() {
       isLoading.value = true;
@@ -64,6 +83,8 @@ export default {
     return {
       dispensers,
       isLoading,
+      dispenserKeys,
+      dispensersMapped,
     };
   },
 };

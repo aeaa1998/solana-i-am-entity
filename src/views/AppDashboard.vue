@@ -1,80 +1,90 @@
 <template>
-  <div class="bg-primary-50">
+  <div class="bg-gradient-to-bl from-red-200 via-red-300 to-yellow-200">
     <!--  -->
     <div class="flex h-screen antialiased text-gray-900">
       <div class="flex flex-col flex-1 overflow-x-hidden">
         <!-- Navbar -->
-        <header class="py-2 relative z-10">
-          <div class="flex items-center justify-between p-2">
-            <!-- Mobile menu button -->
-            <div>
-              <v-primary-button v-if="connectedWallet" @click="isMobileMainMenuOpen = !isMobileMainMenuOpen" class="sm:hidden h-10 w-10 rounded-md">
-                <span class="sr-only">Open main manu</span>
-                <span aria-hidden="true">
-                  <font-awesome-icon size="xl" icon="fa-solid fa-bars" />
-                </span>
-              </v-primary-button>
-
-              <!-- Brand -->
-              <a href="#" class="ml-4 inline-block text-2xl font-bold tracking-wider text-black uppercase"> IAM - GT </a>
-            </div>
-            <!-- Mobile sub menu button -->
-
-            <div>
-              <v-primary-button @click="isMobileSubMenuOpen = !isMobileSubMenuOpen" class="rounded-md md:hidden h-10 w-10">
-                <span class="sr-only">Open sub menu</span>
-                <span aria-hidden="true">
-                  <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"
-                    />
-                  </svg>
-                </span>
-              </v-primary-button>
-              <!-- Desktop Right buttons -->
-              <nav aria-label="Secondary" class="hidden space-x-2 md:flex md:items-center">
-                <!-- Notification button -->
-                <!-- <v-primary-button v-if="connectedWallet" @click="isNotificationsPanelOpen = !isNotificationsPanelOpen" class="w-11 h-11 rounded-full">
-                  <span class="sr-only">Open Notification panel</span>
-                  <font-awesome-icon size="lg" icon="fa-solid fa-bell fa-lg" />
-                </v-primary-button> -->
-
-                <!-- User avatar button -->
-
+        <Popover as="header" class="relative">
+          <div class="bg-primary-800/50 py-4">
+            <nav class="relative mx-auto flex items-center justify-between px-4 sm:px-6" aria-label="Global">
+              <div class="flex flex-1 items-center">
+                <div class="flex w-full items-center justify-between md:w-auto">
+                  <h1 class="text-white font-bold text-3xl mr-8">I AM GT</h1>
+                  <a href="#">
+                    <img class="h-8 w-auto sm:h-10" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="" />
+                  </a>
+                  <div class="-mr-2 flex items-center md:hidden">
+                    <PopoverButton
+                      class="focus-ring-inset inline-flex items-center justify-center rounded-md bg-primary-500 p-2 text-gray-400 hover:bg-primary-400 focus:outline-none focus:ring-2 focus:ring-white"
+                    >
+                      <span class="sr-only">Open main menu</span>
+                      <Bars3Icon color="red" class="h-6 w-6 text-white" aria-hidden="true" />
+                    </PopoverButton>
+                  </div>
+                </div>
+              </div>
+              <div class="hidden md:flex md:items-center md:space-x-6">
                 <wallet-multi-button />
-              </nav>
-
-              <!-- Mobile sub menu -->
-              <mobile-sub-menu v-model:isOpen="isMobileSubMenuOpen" :openNotificationsPanel="openNotificationsPanel" />
-            </div>
+              </div>
+            </nav>
           </div>
-        </header>
+
+          <transition
+            enter-active-class="duration-150 ease-out"
+            enter-from-class="opacity-0 scale-95"
+            enter-to-class="opacity-100 scale-100"
+            leave-active-class="duration-100 ease-in"
+            leave-from-class="opacity-100 scale-100"
+            leave-to-class="opacity-0 scale-95"
+          >
+            <PopoverPanel focus class="absolute inset-x-0 top-0 z-10 origin-top transform p-2 transition md:hidden">
+              <div class="overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5">
+                <div class="flex items-center justify-between px-5 pt-4">
+                  <div>
+                    <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=white" alt="" />
+                  </div>
+                  <div class="-mr-2">
+                    <PopoverButton
+                      class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-600"
+                    >
+                      <span class="sr-only">Close menu</span>
+                      <XMarkIcon class="h-6 w-6" aria-hidden="true" />
+                    </PopoverButton>
+                  </div>
+                </div>
+                <div class="pt-5 pb-6">
+                  <div class="mt-6 px-5">
+                    <wallet-multi-button class="w-full" />
+                  </div>
+                </div>
+              </div>
+            </PopoverPanel>
+          </transition>
+        </Popover>
 
         <!-- Main content -->
 
         <v-spinner class="self-center" v-if="connectingWallet" />
 
         <div v-else-if="isValidWallet" class="flex w-full grow h-full" style="overflow: auto">
-          <div class="px-4 xl:w-1/5 lg:w-1/4 md:-2/5 sm:w-1/3 hidden sm:block py-3 sm:sticky top-0">
-            <div class="overflow-y-auto flex flex-col h-full">
+          <div class="hidden sm:block sm:sticky top-0">
+            <div class="overflow-y-auto flex flex-col h-full px-3 bg-primary-800/50">
+              <collapsible-menu class="my-2" :routeOptions="dashboardOptionsMenu" text="Dashboard" icon="fa-solid fa-chart-line" />
               <collapsible-menu class="my-2" :routeOptions="documentsOptions" text="Documentos" icon="fa-solid fa-passport" />
               <collapsible-menu class="my-2" :routeOptions="userOptionsMenu" text="Dispensadores" icon="fa-solid fa-ticket" />
             </div>
           </div>
 
-          <div class="conatiner mx-auto py-3 px-2 w-full h-full flex flex-col">
-            <div class="py-2 text-primary-900">
-              <span v-for="(matched, idx) in this.$route.matched" :key="idx">
+          <div class="conatiner mx-auto w-full h-full flex flex-col">
+            <div class="text-primary-900">
+              <!-- <span v-for="(matched, idx) in this.$route.matched" :key="idx">
                 <a :href="matched.path">
                   {{ matched.name }}
                 </a>
                 <span v-if="idx != Object.keys(this.$route.matched).length - 1"> / </span>
-              </span>
+              </span> -->
             </div>
-            <div class="bg-white rounded-lg grow overflow-y-auto p-8">
+            <div class="bg-white grow overflow-y-auto p-8">
               <router-view />
             </div>
           </div>
@@ -96,6 +106,10 @@
 
 <script>
 /* eslint-disable vue/no-unused-components */
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import { Bars3Icon, XMarkIcon } from "@heroicons/vue/24/outline";
+import { ChevronRightIcon } from "@heroicons/vue/20/solid";
+
 import Login from "./auth/Login.vue";
 import SideBar from "./sidebar/SideBar.vue";
 import NotificationsNavBar from "./sidebar/notifications/NotificationsNavBar.vue";
@@ -116,11 +130,20 @@ export default {
     CollapsibleMenu,
     NotificationsNavBar,
     MobileSubMenu,
+    ChevronRightIcon,
+    Bars3Icon,
+    XMarkIcon,
+    Popover,
+    PopoverButton,
+    PopoverPanel,
   },
   name: "AppDashboard",
   setup() {
     const store = useStore();
     const router = useRouter();
+
+    const dashboardOptionsMenu = [{ id: 1, path: { name: "Dashboard" }, name: "Dashboard" }];
+
     // Constants
     const userOptionsMenu = [
       { id: 1, path: { name: "Dispensadores" }, name: "Dispensadores" },
@@ -128,7 +151,7 @@ export default {
     ];
 
     const documentsOptions = [
-      { id: 1, path: { name: "Dashboard" }, name: "Dashboard" },
+      // { id: 1, path: { name: "Dashboard" }, name: "Dashboard" },
       // { id: 2, path: { name: "Login" }, name: "Requisitos" },
       { id: 3, path: { name: "Credenciales" }, name: "Credenciales" },
     ];
@@ -164,6 +187,7 @@ export default {
       connectingWallet,
       connectedWallet,
       isValidWallet,
+      dashboardOptionsMenu,
     };
   },
 };
@@ -233,5 +257,11 @@ export default {
 
 .hover\:overflow-y-auto:hover {
   overflow-y: auto;
+}
+
+.primary-gradient {
+  background: #834d9b; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #d04ed6, #834d9b); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #d04ed6, #834d9b); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 </style>

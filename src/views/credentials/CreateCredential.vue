@@ -74,7 +74,7 @@
             <v-cancel-button :disabled="isCreating" @click="$router.push('/credentials')" class="h-10 w-full rounded-md"> Atras </v-cancel-button>
           </div>
           <div class="sm:w-1/2 w-full p-1">
-            <v-primary-button @click="createNft" :disabled="!isValid || isCreating" class="h-10 w-full rounded-md">
+            <v-primary-button @click="createNft" :disabled="!isValid || isCreating" class="h-10 w-full rounded-md" color="bg-green-400 hover:bg-green-500 focus:ring-green-800 active:bg-green-700">
               {{ !isCreating ? "Confirmar" : "Cargando" }}
             </v-primary-button>
           </div>

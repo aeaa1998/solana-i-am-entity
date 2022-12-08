@@ -7,7 +7,7 @@
     class="p-2 text-sm transition-colors duration-200 rounded-md hover:text-gray-700 hover:bg-primary-100"
     :class="{
       'text-gray-700 bg-primary-100 font-semibold	': isActive,
-      'text-gray-600': !isActive,
+      'text-white': !isActive,
     }"
     v-slot="{ href, navigate }"
   >

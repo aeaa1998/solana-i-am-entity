@@ -1,11 +1,18 @@
 <template>
-  <modal v-model="isVisibleModal" class="w-full sm:w-5/6 md:w-4/5 max-h-full" classWrapper="!max-h-full">
-    <div class="bg-primary-50/50 p-6 flex-col max-h-full overflow-y-auto" v-if="isVisibleModal && nft">
-      <div class="text-3xl text-primary-500 font-bold">{{ nft.name }}</div>
+  <modal v-model="isVisibleModal" class="w-full sm:w-5/6 md:w-4/6 max-h-full rounded" classWrapper="!max-h-full">
+    <div class="bg-white p-6 flex-col max-h-full overflow-y-auto rounded-lg" v-if="isVisibleModal && nft">
+      <div class="text-4xl text-primary-500 font-bold">{{ nft.name }}</div>
       <div v-if="nftTransactionCreatedAt" class="text-lg fonst-semibold text-gray-700">
         Creado el: {{ new Date(nftTransactionCreatedAt.blockTime * 1000).toLocaleDateString("es-GT", { day: "numeric", year: "numeric", month: "short" }) }}
       </div>
-      <line-tabs v-model="selectedTab" :tabs="tabs" tab-item-class="flex-1 uppercase" class="mb-2">
+      <line-tabs
+        v-model="selectedTab"
+        :tabs="tabs"
+        tab-item-class="min-w-[100px] md:min-w-[200px] lg:min-w-[250px] xl:min-w-[350px] uppercase"
+        class="mb-4 w-fit mx-auto"
+        selectedColor="text-secondary-600 dark:text-secondary-500"
+        selectedColorBorder="dark:border-secondary-500 border-secondary-600"
+      >
         <template v-slot="{ item }">
           <div class="flex flex-row gap-x-2 justify-center items-center">
             <font-awesome-icon :icon="`fa-solid ${item.icon}`" />
@@ -14,9 +21,9 @@
         </template>
       </line-tabs>
       <div v-if="selectedTab == 0" class="w-full grow">
-        <div class="flex flex-wrap gap-4 h-full overflow-y-auto">
-          <div class="w-full md:w-1/4">
-            <img class="w-full aspect-square bg-cover bg-primary-50 border-primary-100 border-2 rounded" v-if="imageSrc" :src="imageSrc" />
+        <div class="grid grid-cols-4 gap-4 h-full overflow-y-auto gap-y-2">
+          <div class="col-span-4 lg:col-span-1">
+            <img class="w-full aspect-square bg-cover border-secondary-400 rounded-xl shadow-lg" v-if="imageSrc" :src="imageSrc" />
             <div class="my-3">
               <div class="text-lg">Descripción de la credencial</div>
               <hr class="border-t-2 rounded mt-1 border-primary-800" />
@@ -31,12 +38,21 @@
               </p>
             </div>
           </div>
-          <div class="grow h-full">
+          <div class="col-span-4 lg:col-span-3 h-full">
             <!-- <div class="flex flex-wrap"> -->
             <h2 class="text-xl font-bold w-full mb-4">Dispensadores</h2>
             <v-spinner v-if="isLoadingCandyMachines" class="!w-8 !h-8" />
             <div class="text-sm w-full" v-else-if="!candyMachines || !candyMachines.length">No se le han configurado dispensadores a la credencial</div>
-            <candy-machine-card v-else :hover="false" v-for="candyMachine in candyMachines" :candyMachine="candyMachine" :key="candyMachine.address.toBase58()" class="mb-2 last:mb-0" />
+            <ul v-else role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <candy-machine-card
+                :hover="false"
+                v-for="(candyMachine, index) in candyMachines"
+                :number="index + 1"
+                :candyMachine="candyMachine"
+                :key="candyMachine.address.toBase58()"
+                class="mb-2 last:mb-0"
+              />
+            </ul>
           </div>
         </div>
       </div>

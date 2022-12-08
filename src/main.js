@@ -22,9 +22,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // import * as icons from '@fortawesome/free-solid-svg-icons'
-import { faUser, faIdCard, faMagnifyingGlass, faBell, faBars, faPlus, faKey, faInfo, faChevronLeft, faFile, faPassport, faTicket, faXmark, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faIdCard, faMagnifyingGlass, faBell, faBars, faPlus, faKey, faInfo, faChevronLeft, faFile, faPassport, faTicket, faXmark, faEyeSlash, faEye, faChartLine } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faUser, faIdCard, faMagnifyingGlass, faBell, faBars, faPlus, faKey, faInfo, faChevronLeft, faFile, faPassport, faTicket, faXmark, faEyeSlash, faEye)
+library.add(faUser, faIdCard, faMagnifyingGlass, faBell, faBars, faPlus, faKey, faInfo, faChevronLeft, faFile, faPassport, faTicket, faXmark, faEyeSlash, faEye, faChartLine)
 
 //Vee validate all rules
 import AllRules from '@vee-validate/rules';
@@ -50,7 +50,7 @@ setLocale('es')
 //Axios config
 import axios from 'axios';
 const _axios = axios.create({
-  baseURL: 'http://localhost:3000/'
+  baseURL: 'https://iamverifiable.xyz/'
 })
 
 window._axios = _axios

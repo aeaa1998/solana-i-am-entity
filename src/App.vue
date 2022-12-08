@@ -14,6 +14,7 @@ import { initWallet } from "solana-wallets-vue";
 import { useRoute } from "vue-router";
 import { computed, provide } from "@vue/runtime-core";
 import { initWorkspace } from "@/composables";
+import { useWorkspace } from "@/composables";
 
 const walletOptions = {
   wallets: [new PhantomWalletAdapter()],
@@ -25,7 +26,6 @@ export default {
     AppDashboard,
   },
   setup() {
-    const logged = ref(true);
     const route = useRoute();
 
     //Computed property
@@ -36,6 +36,9 @@ export default {
 
     //Provide
     provide("currentRouteName", currentRouteName);
+    const { wallet } = useWorkspace();
+    // const logged = computed(() => !!wallet.value);
+    const logged = computed(() => true);
 
     return {
       logged,

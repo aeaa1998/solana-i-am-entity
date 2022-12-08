@@ -7,12 +7,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: colors.indigo,
+        primary: colors.red,
+        secondary: colors.yellow,
         ...colors
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/aspect-ratio')
+  ],
   safelist: [
     'text-gray-700',
     'text-gray-400'

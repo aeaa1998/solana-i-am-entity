@@ -2,78 +2,38 @@
   <div class="flex flex-col">
     <div class="text-3xl font-bold text-gray-900 tracking-wide">Dashboard</div>
     <hr class="mt-3 dark:border-primary-400 border-t-2 rounded mb-8" />
-    <v-spinner v-if="isLoading" class="h-16 w-16 self-center" />
-    <div v-else class="flex flex-wrap w-full gap-4">
+    <div class="flex flex-wrap w-full gap-4">
       <!-- Card for best candy machines -->
-      <div class="rounded bg-primary-50 px-8 py-3 relative w-full sm:w-1/2 md:w-1/2 lg:w-1/3">
-        <h2 class="text-lg font-semibold text-left mb-4">Dispensadores más populares</h2>
-        <bar :chart-data="topDispensersData" :chart-options="chartOptions" cssClasses="" />
+      <div class="cursor-pointer rounded bg-secondary-500/75 px-8 py-3 relative shadow-lg flex flex-row flex-wrap justify-center">
+        <h1 class="text-2xl font-bold w-full text-center text-white">Credenciales</h1>
+        <lottie-player
+          class="self-center mt-4"
+          src="https://assets9.lottiefiles.com/packages/lf20_6gadk1by.json"
+          background="transparent"
+          speed="1"
+          style="width: 200px; height: 200px"
+          loop
+          autoplay
+        ></lottie-player>
+      </div>
+      <div class="cursor-pointer rounded bg-secondary-500/75 px-8 py-3 relative shadow-lg flex flex-row flex-wrap justify-center">
+        <h1 class="text-2xl font-bold w-full text-center text-white">Dispensadores</h1>
+        <lottie-player
+          class="self-center mt-4"
+          src="https://assets2.lottiefiles.com/packages/lf20_dmlujpzk.json"
+          background="transparent"
+          speed="1"
+          style="width: 200px; height: 200px"
+          loop
+          autoplay
+        ></lottie-player>
       </div>
     </div>
   </div>
 </template>
-<script setup>
-import { computed, onMounted, ref } from "vue-demi";
-import { useStore } from "vuex";
-import { orderBy } from "lodash";
-import { Bar } from "vue-chartjs";
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from "chart.js";
-const chartScaffold = { labels: [], datasets: [{ data: [] }] };
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
-
-const isLoadingCandyMachines = ref(false);
-const isLoadingNfts = ref(false);
-const store = useStore();
-const candyMachines = computed(() => store.getters.candyMachines);
-const nfts = computed(() => store.getters.nftsModels);
-
-const isLoading = computed(() => isLoadingCandyMachines.value || isLoadingNfts.value);
-
-const topDispensers = computed(() => orderBy(candyMachines.value, ["itemsMinted"], ["desc"]).splice(0, 5));
-
-const chartOptions = {
-  responsive: true,
-  plugin: {
-    legend: { display: false },
-  },
-  scales: {
-    y: {
-      min: 0,
-      suggestedMax: 100,
-    },
-  },
+<script>
+import * as LottiePlayer from "@lottiefiles/lottie-player";
+export default {
+  name: "Dashboard",
 };
-
-const topDispensersData = computed(() =>
-  topDispensers.value.reduce(
-    (acc, dispenser) => {
-      acc.labels.push(dispenser.symbol);
-      acc.datasets[0].data.push(dispenser.itemsMinted.toNumber());
-      return acc;
-    },
-    { ...chartScaffold }
-  )
-);
-
-async function fetchMachines() {
-  //Only fetch if the machine is missing
-  if (!candyMachines.value.length) {
-    isLoadingCandyMachines.value = true;
-    await store.dispatch("getCandyMachines");
-    isLoadingCandyMachines.value = false;
-  }
-}
-
-async function fetchNfts() {
-  if (!nfts.value.length) {
-    isLoadingNfts.value = true;
-    await store.dispatch("getNftFromCreator", true);
-    isLoadingNfts.value = false;
-  }
-}
-
-onMounted(() => {
-  fetchMachines();
-  fetchNfts();
-});
 </script>

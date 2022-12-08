@@ -1,21 +1,19 @@
 <template>
-  <div
-    class="bg-primary-50 rounded flex flex-col justify-end border-2 border-primary-200 text-left py-3 px-4 text-xs"
-    :class="{
-      'transition ease-in-out hover:scale-110 duration-300 cursor-pointer': hover,
-    }"
-  >
-    <div class="text-primary-800 text-lg font-bold lex flex-col">Dispensador de '{{ candyMachine.symbol }}'</div>
-    <div class="flex-col mt-2">
-      <div>Total de credenciales disponibles: {{ candyMachine.itemsAvailable.toString() }}</div>
-      <div>Total de credenciales cargadas: {{ candyMachine.itemsLoaded.toString() }}</div>
-      <div>Total de credenciales restantes: {{ candyMachine.itemsRemaining.toString() }}</div>
-      <div>Total de credenciales minteadas: {{ candyMachine.itemsMinted.toString() }}</div>
+  <li class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow-lg">
+    <div class="flex w-full items-center justify-between space-x-6 p-6">
+      <div class="flex-1 truncate">
+        <div class="flex items-center space-x-3">
+          <h3 class="truncate text-sm font-medium text-gray-900">{{ candyMachine.symbol }} #{{ number }}</h3>
+          <span v-if="alive" class="inline-block flex-shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800">En vivo</span>
+        </div>
+        <p class="mt-1 truncate text-sm text-gray-500">{{ candyMachine.itemsRemaining.toString() }} credenciales restantes</p>
+        <p class="mt-1 truncate text-sm text-gray-500">{{ candyMachine.itemsMinted.toString() }} minteadas del dispensador</p>
+      </div>
     </div>
-  </div>
+  </li>
 </template>
 <script setup>
-import { toRefs } from "vue-demi";
+import { ref, toRefs } from "vue-demi";
 
 const props = defineProps({
   candyMachine: {
@@ -25,7 +23,12 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  number: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const { candyMachine } = toRefs(props);
+const alive = ref(false);
 </script>

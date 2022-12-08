@@ -1,5 +1,5 @@
 {
-  "name": "solana-i-am-vite",
+  "name": "solana-i-am-entity",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -16,6 +16,8 @@
     "@fortawesome/free-regular-svg-icons": "^6.1.2",
     "@fortawesome/free-solid-svg-icons": "^6.1.2",
     "@fortawesome/vue-fontawesome": "^3.0.1",
+    "@headlessui/vue": "^1.7.4",
+    "@heroicons/vue": "^2.0.13",
     "@kyvg/vue3-notification": "^2.3.5",
     "@lottiefiles/lottie-player": "^1.5.7",
     "@metaplex-foundation/js": "^0.17.1",
@@ -26,6 +28,7 @@
     "@solana/spl-token": "~0.2.0",
     "@solana/wallet-adapter-phantom": "^0.9.9",
     "@solana/web3.js": "^1.53.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@vee-validate/i18n": "^4.6.7",
     "@vee-validate/rules": "^4.6.5",
     "@vuepic/vue-datepicker": "^3.0.0",
@@ -42,13 +45,12 @@
     "vue-chartjs": "^4.1.1",
     "vue-router": "^4.0.3",
     "vue-select": "^4.0.0-beta.3",
-    "vuex": "^4.0.0",
-    "yarn": "^1.22.19"
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@vue/cli-service": "~5.0.0",
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@vitejs/plugin-vue": "^3.0.3",
+    "@vue/cli-service": "~5.0.0",
     "assert": "^2.0.0",
     "autoprefixer": "^10.4.8",
     "crypto-browserify": "^3.12.0",
